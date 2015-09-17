@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace CW_Study_Tool_3_for_PC
 {
-    class Gib
+    class Me
     {
-        public static string hostpath = "C:\\ProgramData\\CW Soft\\CW Study Tool 3";
-        public static string hostpaths = hostpath + "\\";
         public static string username = "", password = "";
-        public static string progressStr = "";
     }
 }

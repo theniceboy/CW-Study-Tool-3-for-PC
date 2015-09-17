@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Parse;
 
 namespace CW_Study_Tool_3_for_PC
 {

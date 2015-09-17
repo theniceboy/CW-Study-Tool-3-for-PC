@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using Parse;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace CW_Study_Tool_3_for_PC
 {
-    public partial class FrmMain : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class FrmLogin : DevComponents.DotNetBar.Metro.MetroForm
     {
-        public FrmMain()
-        {
-            InitializeComponent();
-            ParseClient.Initialize(S.ps1, S.ps2);
-        }
-        
         private string uname, pword;
         private int get_type = -1;
+
+        public FrmLogin()
+        {
+            InitializeComponent();
+        }
+
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (get_type != 0)
+            {
+                Application.Exit();
+            }
+        }
 
         #region Internet Connect Class
         /*
@@ -44,21 +55,14 @@ namespace CW_Study_Tool_3_for_PC
                 return 2;
         }
         #endregion
-
-        void get_user_info()
-        {
-            Gib.username = File.ReadAllText(Gib.hostpaths + "username");
-            Gib.password = File.ReadAllText(Gib.hostpaths + "password");
-        }
-
+       
         /*
             Internet not available: -1
             Login successed: 0
             Username not exists: 1
             Password incorrect: 2
         */
-
-        async void login_check(string username, string password)
+        private async void login(string username, string password)
         {
             if (internet_available() == 1)
             {
@@ -75,7 +79,7 @@ namespace CW_Study_Tool_3_for_PC
             ParseObject obj = result.First();
             uname = username;
             pword = obj.Get<string>("password");
-            if (pword != password)
+            if (pword != S.encrypt(password))
             {
                 get_type = 2;
             }
@@ -93,39 +97,26 @@ namespace CW_Study_Tool_3_for_PC
             else if (get_type == 1)
             {
                 MessageBoxEx.Show("Username not exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                FrmLogin frm = new FrmLogin();
-                frm.ShowDialog(this);
             }
             else if (get_type == 1)
             {
                 MessageBoxEx.Show("Password incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                FrmLogin frm = new FrmLogin();
-                frm.ShowDialog(this);
             }
             else
             {
                 Gib.username = uname;
                 Gib.password = pword;
+                File.WriteAllText(Gib.hostpaths + "username", Gib.username);
+                File.WriteAllText(Gib.hostpaths + "password", Gib.password);
+                FrmMain frm = (FrmMain) this.Owner;
+                frm.btnLearnWords.Enabled = frm.btnManageWords.Enabled = frm.btnLogout.Enabled = true;
+                this.Close();
             }
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists("C:\\ProgramData\\CW Soft"))
-                Directory.CreateDirectory("C:\\ProgramData\\CW Soft");
-            if (!Directory.Exists(Gib.hostpath))
-                Directory.CreateDirectory(Gib.hostpath);
-            if (!File.Exists(Gib.hostpaths + "username"))
-            {
-                FrmLogin frm = new FrmLogin();
-                frm.ShowDialog(this);
-            }
-            else
-            {
-                get_user_info();
-                login_check(Gib.username, Gib.password);
-                btnLearnWords.Enabled = btnManageWords.Enabled = btnLogout.Enabled = true;
-            }
+            login(tbUsername.Text, tbPassword.Text);
         }
     }
 }
