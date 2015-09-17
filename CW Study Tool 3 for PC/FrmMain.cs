@@ -109,6 +109,12 @@ namespace CW_Study_Tool_3_for_PC
             }
         }
 
+        private void btnManageWords_Click(object sender, EventArgs e)
+        {
+            FrmManage frm = new FrmManage();
+            frm.ShowDialog(this);
+        }
+
         private void FrmMain_Load(object sender, EventArgs e)
         {
             if (!Directory.Exists("C:\\ProgramData\\CW Soft"))

@@ -69,6 +69,7 @@ namespace CW_Study_Tool_3_for_PC
             this.btnManageWords.Size = new System.Drawing.Size(307, 72);
             this.btnManageWords.TabIndex = 1;
             this.btnManageWords.Text = "Manage Words";
+            this.btnManageWords.Click += new System.EventHandler(this.btnManageWords_Click);
             // 
             // btnLogout
             // 
