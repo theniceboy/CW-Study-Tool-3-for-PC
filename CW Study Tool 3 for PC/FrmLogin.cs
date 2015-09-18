@@ -83,7 +83,10 @@ namespace CW_Study_Tool_3_for_PC
             {
                 get_type = 2;
             }
-            get_type = 0;
+            else
+            {
+                get_type = 0;
+            }
             tried_login();
         }
 
@@ -91,16 +94,16 @@ namespace CW_Study_Tool_3_for_PC
         {
             if (get_type == -1)
             {
-                MessageBoxEx.Show("Internet not available!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxEx.Show(this, "Internet not available!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, true);
                 Application.Exit();
             }
             else if (get_type == 1)
             {
-                MessageBoxEx.Show("Username not exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxEx.Show(this, "Username not exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, true);
             }
-            else if (get_type == 1)
+            else if (get_type == 2)
             {
-                MessageBoxEx.Show("Password incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxEx.Show(this, "Password incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, true);
             }
             else
             {
@@ -112,10 +115,12 @@ namespace CW_Study_Tool_3_for_PC
                 frm.btnLearnWords.Enabled = frm.btnManageWords.Enabled = frm.btnLogout.Enabled = true;
                 this.Close();
             }
+            this.Enabled = true;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             login(tbUsername.Text, tbPassword.Text);
         }
     }
