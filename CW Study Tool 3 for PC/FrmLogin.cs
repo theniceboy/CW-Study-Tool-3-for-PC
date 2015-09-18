@@ -38,8 +38,8 @@ namespace CW_Study_Tool_3_for_PC
 
         #region Internet Connect Class
         /*
-         * Not available£º1
-         * Available£º2
+         * Not available: 1
+         * Available: 2
         */
         public const int INTERNET_CONNECTION_MODEM = 1;
         public const int INTERNET_CONNECTION_LAN = 2;
