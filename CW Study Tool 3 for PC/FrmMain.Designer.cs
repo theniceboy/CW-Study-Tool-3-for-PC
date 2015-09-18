@@ -29,6 +29,7 @@ namespace CW_Study_Tool_3_for_PC
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.btnLearnWords = new DevComponents.DotNetBar.ButtonX();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.btnManageWords = new DevComponents.DotNetBar.ButtonX();
@@ -97,6 +98,7 @@ namespace CW_Study_Tool_3_for_PC
             this.Controls.Add(this.btnLearnWords);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(349, 267);
             this.MinimumSize = new System.Drawing.Size(349, 267);
             this.Name = "FrmMain";

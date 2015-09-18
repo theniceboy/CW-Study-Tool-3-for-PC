@@ -28,6 +28,7 @@ namespace CW_Study_Tool_3_for_PC
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
             this.tbUsername = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tbPassword = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.lbUsername = new System.Windows.Forms.Label();
@@ -121,7 +122,7 @@ namespace CW_Study_Tool_3_for_PC
             this.Controls.Add(this.tbUsername);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(393, 312);
