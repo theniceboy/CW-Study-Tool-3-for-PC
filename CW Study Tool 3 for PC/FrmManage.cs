@@ -84,6 +84,7 @@ namespace CW_Study_Tool_3_for_PC
             this.lvWords.EndUpdate();
             ToastNotification.Close(this);
             ToastNotification.Show(this, "Group \"" + Gib.cur_group + "\" loaded", null, 1000);
+            pnWords.Enabled = true;
         }
 
         private void FrmManage_Load(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace CW_Study_Tool_3_for_PC
         {
             if (lvGroups.SelectedItems.Count > 0)
             {
-                pnWords.Enabled = true;
+                pnWords.Enabled = false;
                 Gib.cur_group = lvGroups.SelectedItems[0].Text;
                 load_words();
             }
@@ -139,7 +140,8 @@ namespace CW_Study_Tool_3_for_PC
 
         private void btnNewGroup_Click(object sender, EventArgs e)
         {
-
+            FrmNewGroup frm = new FrmNewGroup();
+            frm.ShowDialog(this);
         }
 
         private void btnNewWord_Click(object sender, EventArgs e)
