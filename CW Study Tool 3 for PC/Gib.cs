@@ -12,5 +12,7 @@ namespace CW_Study_Tool_3_for_PC
         public static string hostpaths = hostpath + "\\";
         public static string username = "", password = "";
         public static string progressStr = "";
+        public static string cur_group, cur_word = "";
+        public static bool cur_changed = false;
     }
 }

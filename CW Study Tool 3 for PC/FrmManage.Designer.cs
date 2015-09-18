@@ -101,6 +101,7 @@
             this.btnNewGroup.SymbolColor = System.Drawing.Color.DeepSkyBlue;
             this.btnNewGroup.SymbolSize = 10F;
             this.btnNewGroup.TabIndex = 3;
+            this.btnNewGroup.Click += new System.EventHandler(this.btnNewGroup_Click);
             // 
             // lvWords
             // 
@@ -160,6 +161,7 @@
             this.btnNewWord.SymbolColor = System.Drawing.Color.DeepSkyBlue;
             this.btnNewWord.SymbolSize = 10F;
             this.btnNewWord.TabIndex = 6;
+            this.btnNewWord.Click += new System.EventHandler(this.btnNewWord_Click);
             // 
             // tbWord
             // 

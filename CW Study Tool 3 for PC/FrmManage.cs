@@ -19,8 +19,6 @@ namespace CW_Study_Tool_3_for_PC
             InitializeComponent();
         }
 
-        private string cur_group, cur_word = "", cur_translation = "";
-        private bool cur_changed = false;
 
         #region Internet Connect Class
         /*
@@ -42,7 +40,7 @@ namespace CW_Study_Tool_3_for_PC
         }
         #endregion
 
-        async void  load_groups()
+        public async void  load_groups()
         {
             if (internet_available() == 1)
             {
@@ -65,7 +63,7 @@ namespace CW_Study_Tool_3_for_PC
         }
 
         private IEnumerable<ParseObject> wordlist;
-        async void load_words()
+        public async void load_words()
         {
             if (internet_available() == 1)
             {
@@ -74,7 +72,7 @@ namespace CW_Study_Tool_3_for_PC
             }
             this.lvWords.BeginUpdate();
             this.lvWords.Items.Clear();
-            var query = ParseObject.GetQuery("words").WhereEqualTo("username", Gib.username).WhereEqualTo("group", cur_group);
+            var query = ParseObject.GetQuery("words").WhereEqualTo("username", Gib.username).WhereEqualTo("group", Gib.cur_group);
             wordlist = await query.FindAsync();
             foreach (var obj in wordlist)
             {
@@ -85,7 +83,7 @@ namespace CW_Study_Tool_3_for_PC
             }
             this.lvWords.EndUpdate();
             ToastNotification.Close(this);
-            ToastNotification.Show(this, "Group \"" + cur_group + "\" loaded", null, 1000);
+            ToastNotification.Show(this, "Group \"" + Gib.cur_group + "\" loaded", null, 1000);
         }
 
         private void FrmManage_Load(object sender, EventArgs e)
@@ -99,7 +97,7 @@ namespace CW_Study_Tool_3_for_PC
             if (lvGroups.SelectedItems.Count > 0)
             {
                 pnWords.Enabled = true;
-                cur_group = lvGroups.SelectedItems[0].Text;
+                Gib.cur_group = lvGroups.SelectedItems[0].Text;
                 load_words();
             }
         }
@@ -109,11 +107,11 @@ namespace CW_Study_Tool_3_for_PC
             if (lvWords.SelectedItems.Count > 0)
             {
                 string tword = lvWords.SelectedItems[0].Text, ttranslation = lvWords.SelectedItems[0].ToolTipText;
-                if (tword != cur_word && cur_changed)
+                if (tword != Gib.cur_word && Gib.cur_changed)
                 {
                     if (
                         MessageBoxEx.Show(this,
-                            "Your word \"" + cur_word +
+                            "Your word \"" + Gib.cur_word +
                             "\" has been changed. Do you want to update those changes to cloud?", "Dialog",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, true) ==
                         DialogResult.Yes)
@@ -122,35 +120,47 @@ namespace CW_Study_Tool_3_for_PC
                     }
                 }
                 pnEdit.Enabled = true;
-                cur_word = tbWord.Text = tword;
-                cur_translation = tbTranslation.Text = ttranslation;
-                cur_changed = false;
-                lbEdit.Text = "Editing: " + cur_word;
+                Gib.cur_word = tbWord.Text = tword;
+                tbTranslation.Text = ttranslation;
+                Gib.cur_changed = false;
+                lbEdit.Text = "Editing: " + Gib.cur_word;
             }
         }
 
         private void tbWord_TextChanged(object sender, EventArgs e)
         {
-            cur_changed = true;
+            Gib.cur_changed = true;
         }
 
         private void tbTranslation_TextChanged(object sender, EventArgs e)
         {
-            cur_changed = true;
+            Gib.cur_changed = true;
+        }
+
+        private void btnNewGroup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNewWord_Click(object sender, EventArgs e)
+        {
+            FrmNewWord frm = new FrmNewWord();
+            frm.ShowDialog(this);
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
             foreach (var obj in wordlist)
             {
-                if (obj["word"].ToString() == cur_word)
+                if (obj["word"].ToString() == Gib.cur_word)
                 {
                     obj["word"] = tbWord.Text.Trim();
                     obj["translation"] = tbTranslation.Text;
                     await obj.SaveAsync();
                     ToastNotification.Close(this);
-                    ToastNotification.Show(this, "Word \"" + cur_word + "\" updated", null, 1000);
+                    ToastNotification.Show(this, "Word \"" + Gib.cur_word + "\" updated", null, 1000);
                     load_words();
+                    Gib.cur_changed = false;
                     break;
                 }
             }
