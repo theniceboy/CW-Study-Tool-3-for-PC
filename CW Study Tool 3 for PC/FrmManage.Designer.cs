@@ -43,6 +43,7 @@
             this.pnWords = new System.Windows.Forms.Panel();
             this.pnEdit = new System.Windows.Forms.Panel();
             this.lbEdit = new System.Windows.Forms.Label();
+            this.btnBatch = new DevComponents.DotNetBar.ButtonX();
             this.pnWords.SuspendLayout();
             this.pnEdit.SuspendLayout();
             this.SuspendLayout();
@@ -225,6 +226,7 @@
             // 
             this.pnWords.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnWords.Controls.Add(this.btnBatch);
             this.pnWords.Controls.Add(this.btnNewWord);
             this.pnWords.Controls.Add(this.lvWords);
             this.pnWords.Controls.Add(this.lbWords);
@@ -262,6 +264,21 @@
             this.lbEdit.TabIndex = 7;
             this.lbEdit.Text = "Editing: ";
             this.lbEdit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnBatch
+            // 
+            this.btnBatch.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnBatch.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange;
+            this.btnBatch.FocusCuesEnabled = false;
+            this.btnBatch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBatch.Location = new System.Drawing.Point(243, 4);
+            this.btnBatch.Name = "btnBatch";
+            this.btnBatch.Size = new System.Drawing.Size(25, 25);
+            this.btnBatch.Symbol = "";
+            this.btnBatch.SymbolColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnBatch.SymbolSize = 10F;
+            this.btnBatch.TabIndex = 7;
+            this.btnBatch.Click += new System.EventHandler(this.btnBatch_Click);
             // 
             // FrmManage
             // 
@@ -303,5 +320,6 @@
         private System.Windows.Forms.Panel pnWords;
         private System.Windows.Forms.Panel pnEdit;
         private System.Windows.Forms.Label lbEdit;
+        public DevComponents.DotNetBar.ButtonX btnBatch;
     }
 }

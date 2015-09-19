@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -164,6 +165,44 @@ namespace CW_Study_Tool_3_for_PC
                     load_words();
                     Gib.cur_changed = false;
                     break;
+                }
+            }
+        }
+
+        private async void btnBatch_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"; //过滤文件类型
+            fd.ShowReadOnly = true; //设定文件是否只读
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                ToastNotification.Show(this, "Importing...", null, 5000);
+                string[] strlist = File.ReadAllLines(fd.FileName);
+                int js = 0;
+                foreach (string str in strlist)
+                {
+                    string s = str.Trim();
+                    if (s != "")
+                    {
+                        ParseObject word = new ParseObject("words");
+                        word["word"] = s;
+                        word["translation"] = "";
+                        word["username"] = Gib.username;
+                        word["group"] = Gib.cur_group;
+                        await word.SaveAsync();
+                        ++js;
+                    }
+                }
+                if (js > 0)
+                {
+                    load_words();
+                    ToastNotification.Close(this);
+                    ToastNotification.Show(this, "Successfully imported " + js + " words", null, 5000);
+                }
+                else
+                {
+                    ToastNotification.Close(this);
+                    ToastNotification.Show(this, "No words imported", null, 5000, eToastGlowColor.Red);
                 }
             }
         }
